@@ -316,3 +316,71 @@ async function createNewPost(title, body, userId) {
 
 // Testing the POST request
 createNewPost("My First API Post", "This is the content of my post.", 1);
+
+
+// 1. --- Configuration & Selectors ---
+const API_KEY = "d246e00029bbfbe85465c2bb0f3c0fa1"; 
+
+const cityInput = document.getElementById("city-input");
+const searchBtn = document.getElementById("search-btn");
+const weatherInfo = document.getElementById("weather-info");
+const errorMsg = document.getElementById("error-message");
+const loadingIndicator = document.getElementById("loading");
+
+// 2. --- The Main Fetch Function ---
+async function getByCity(city) {
+    try {
+        // Reset UI for a new search
+        errorMsg.style.display = "none";
+        weatherInfo.style.display = "none";
+        loadingIndicator.style.display = "block";
+
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        );
+
+        if (!response.ok) {
+            if (response.status === 404) throw new Error("City not found. Try again!");
+            if (response.status === 401) throw new Error("API Key not active yet. Wait 30 mins.");
+            throw new Error("Something went wrong.");
+        }
+
+        const data = await response.json();
+        renderWeather(data);
+
+    } catch (error) {
+        loadingIndicator.style.display = "none";
+        errorMsg.textContent = `⚠️ ${error.message}`;
+        errorMsg.style.display = "block";
+    }
+}
+
+// 3. --- The Rendering Function (Displaying Data) ---
+function renderWeather(data) {
+    loadingIndicator.style.display = "none";
+    
+    // Update the DOM elements with API data
+    document.getElementById("display-city").textContent = data.name;
+    document.getElementById("display-temp").textContent = `${Math.round(data.main.temp)}°C`;
+    document.getElementById("display-desc").textContent = data.weather[0].description;
+    document.getElementById("display-humidity").textContent = data.main.humidity;
+
+    // Show the weather card
+    weatherInfo.style.display = "block";
+}
+
+// 4. --- Event Listeners ---
+searchBtn.addEventListener("click", () => {
+    const city = cityInput.value.trim();
+    if (city) {
+        getByCity(city);
+    }
+});
+
+// Allow pressing "Enter" to search
+cityInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        const city = cityInput.value.trim();
+        if (city) getByCity(city);
+    }
+});
