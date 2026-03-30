@@ -209,3 +209,33 @@ async function getRealUser(id) {
 
 // Testing it out
 getRealUser(1);
+
+
+// --- Task 12.1: Fetching All Users 
+
+async function getAllUsers() {
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users");
+        
+        if (!response.ok) {
+            throw new Error("Failed to fetch users list");
+        }
+        
+        const users = await response.json(); // This is now an Array []
+        
+        console.log(`Total users found: ${users.length}`);
+        
+        // Loop through the array and log each user's name
+        users.forEach(user => {
+            console.log(`User: ${user.name} (Email: ${user.email})`);
+        });
+
+        return users;
+
+    } catch (error) {
+        console.error("Error fetching all users:", error.message);
+    }
+}
+
+// Running the function
+getAllUsers();
