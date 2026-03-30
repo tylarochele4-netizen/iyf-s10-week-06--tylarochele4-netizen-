@@ -279,3 +279,40 @@ async function displayUsers() {
 
 // Run the display function
 displayUsers();
+
+
+// --- Task 12.3: POST Request 
+
+async function createNewPost(title, body, userId) {
+    try {
+        console.log("Sending new post to server...");
+
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST', // Specify the method
+            body: JSON.stringify({
+                title: title,
+                body: body,
+                userId: userId,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to post: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        // The server sends back the object you created + a new ID (usually 101)
+        console.log("Post Created Successfully!", result);
+        return result;
+
+    } catch (error) {
+        console.error("Error during POST request:", error.message);
+    }
+}
+
+// Testing the POST request
+createNewPost("My First API Post", "This is the content of my post.", 1);
