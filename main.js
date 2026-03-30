@@ -1,4 +1,4 @@
-// Exercise 1: Synchronous vs Asynchronous Prediction
+/* // Exercise 1: Synchronous vs Asynchronous Prediction
 console.log("A");
 
 setTimeout(() => {
@@ -316,6 +316,7 @@ async function createNewPost(title, body, userId) {
 
 // Testing the POST request
 createNewPost("My First API Post", "This is the content of my post.", 1);
+*/
 
 
 // 1. --- Configuration & Selectors ---
