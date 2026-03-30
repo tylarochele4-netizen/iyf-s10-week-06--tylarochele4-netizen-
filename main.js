@@ -325,7 +325,7 @@ const cityInput = document.getElementById("city-input");
 const searchBtn = document.getElementById("search-btn");
 const weatherInfo = document.getElementById("weather-info");
 const errorMsg = document.getElementById("error-message");
-const loadingIndicator = document.getElementById("loading");
+const weatherLoading = document.getElementById("loading");
 
 // 2. --- The Main Fetch Function ---
 async function getByCity(city) {
@@ -333,7 +333,7 @@ async function getByCity(city) {
         // Reset UI for a new search
         errorMsg.style.display = "none";
         weatherInfo.style.display = "none";
-        loadingIndicator.style.display = "block";
+        weatherLoading.style.display = "block";
 
         const response = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
