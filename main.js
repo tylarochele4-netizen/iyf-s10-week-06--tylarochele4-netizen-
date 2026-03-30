@@ -121,3 +121,35 @@ getUserData(1)
     .catch(error => {
         console.error("Something went wrong in the chain:", error);
     });
+
+
+// --- Task 11.4: 
+
+async function fetchFullUserData(userId) {
+    try {
+        console.log("Starting async fetch...");
+
+        // 'await' tells JavaScript: "Wait here until this promise resolves"
+        const user = await getUserData(userId);
+        console.log("Step 1 - User found:", user);
+
+        const posts = await getUserPosts(user.id);
+        console.log("Step 2 - Posts found:", posts);
+
+        const comments = await getPostComments(posts[0].id);
+        console.log("Step 3 - Comments found:", comments);
+
+        return comments; // This returns a promise containing the comments
+
+    } catch (error) {
+        // If ANY of the awaits above fail, it jumps straight here
+        console.error("An error occurred during the async process:", error);
+    } finally {
+        console.log("Async fetch process completed.");
+    }
+}
+
+// Running the async function
+fetchFullUserData(1).then(data => {
+    console.log("Final Result in Main Flow:", data);
+});
