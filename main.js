@@ -239,3 +239,43 @@ async function getAllUsers() {
 
 // Running the function
 getAllUsers();
+
+
+// --- Task 12.2: Display API Data in DOM 
+
+const userList = document.getElementById("user-list");
+const loadingIndicator = document.getElementById("loading");
+
+async function displayUsers() {
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users");
+        
+        if (!response.ok) throw new Error("Failed to fetch users");
+
+        const users = await response.json();
+
+        // 1. Hide the loading message
+        loadingIndicator.style.display = "none";
+
+        // 2. Loop through users and create HTML for each
+        users.forEach(user => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <strong>${user.name}</strong> 
+                <br> 📧 ${user.email} 
+                <br> 🏢 ${user.company.name}
+                <hr>
+            `;
+            userList.appendChild(li);
+        });
+
+    } catch (error) {
+        loadingIndicator.style.display = "none";
+        const errorDiv = document.getElementById("error");
+        errorDiv.textContent = error.message;
+        errorDiv.style.display = "block";
+    }
+}
+
+// Run the display function
+displayUsers();
