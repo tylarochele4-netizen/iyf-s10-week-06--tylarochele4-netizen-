@@ -22,8 +22,8 @@ function loadUser(userId, callback) {
     setTimeout(() => {
         const user = { 
             id: userId, 
-            name: "John Doe", 
-            email: "john@example.com" 
+            name: "Shan", 
+            email: "shan@example.com" 
         };
         
         // Call the callback with the user object
@@ -46,7 +46,7 @@ function getUserData(userId) {
         setTimeout(() => {
             // Logic: If ID is a positive number, it "succeeds"
             if (userId > 0) {
-                const user = { id: userId, name: "John Doe" };
+                const user = { id: userId, name: "Shan" };
                 resolve(user); // Success!
             } else {
                 reject("Invalid user ID"); // Failure!
@@ -68,3 +68,56 @@ getUserData(1)
 getUserData(0)
     .then((user) => console.log(user))
     .catch((error) => console.log("Caught expected error:", error));
+
+
+// --- Task 11.3: 
+
+// 1. Function to get User
+function getUserData(userId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: userId, name: "Shan" });
+        }, 1000);
+    });
+}
+
+// 2. Function to get Posts based on User ID
+function getUserPosts(userId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve([
+                { id: 101, title: "Hello World" },
+                { id: 102, title: "Async is cool" }
+            ]);
+        }, 1000);
+    });
+}
+
+// 3. Function to get Comments based on Post ID
+function getPostComments(postId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve([
+                { id: 1, text: "Great post!" },
+                { id: 2, text: "Thanks for sharing" }
+            ]);
+        }, 1000);
+    });
+}
+
+// --- The Chain ---
+getUserData(1)
+    .then(user => {
+        console.log("User:", user);
+        return getUserPosts(user.id); // Return the next promise
+    })
+    .then(posts => {
+        console.log("Posts:", posts);
+        return getPostComments(posts[0].id); // Return the next promise
+    })
+    .then(comments => {
+        console.log("Comments on first post:", comments);
+    })
+    .catch(error => {
+        console.error("Something went wrong in the chain:", error);
+    });
