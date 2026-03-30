@@ -349,7 +349,7 @@ async function getByCity(city) {
         renderWeather(data);
 
     } catch (error) {
-        loadingIndicator.style.display = "none";
+        weatherLoading.style.display = "none";
         errorMsg.textContent = `⚠️ ${error.message}`;
         errorMsg.style.display = "block";
     }
@@ -357,7 +357,7 @@ async function getByCity(city) {
 
 // 3. --- The Rendering Function (Displaying Data) ---
 function renderWeather(data) {
-    loadingIndicator.style.display = "none";
+    weatherLoading.style.display = "none";
     
     // Update the DOM elements with API data
     document.getElementById("display-city").textContent = data.name;
