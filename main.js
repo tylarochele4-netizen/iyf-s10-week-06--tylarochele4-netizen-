@@ -153,3 +153,32 @@ async function fetchFullUserData(userId) {
 fetchFullUserData(1).then(data => {
     console.log("Final Result in Main Flow:", data);
 });
+
+
+// --- Task 11.4: Parallel Execution (Fast) ---
+
+async function getMultipleUsers() {
+    console.log("Starting parallel fetch for 3 users...");
+    const startTime = Date.now();
+
+    try {
+        // Promise.all starts all 3 functions AT THE SAME TIME
+        const [user1, user2, user3] = await Promise.all([
+            getUserData(1),
+            getUserData(2),
+            getUserData(3)
+        ]);
+
+        const endTime = Date.now();
+        console.log("Users received:", user1, user2, user3);
+        console.log(`Total time taken: ${(endTime - startTime) / 1000} seconds`);
+        
+        // Note: This should take ~1 second total, not 3!
+        
+    } catch (error) {
+        console.error("One of the fetches failed:", error);
+    }
+}
+
+// Run the parallel test
+getMultipleUsers();
