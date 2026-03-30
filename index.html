@@ -3,15 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 6 - Async JavaScript</title>
+    <title>IYF Weather Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
- <body>
-    <h1>User Directory</h1>
-    <div id="loading">Loading users...</div>
-    <div id="error" style="color: red; display: none;"></div>
-    
-    <ul id="user-list"></ul>
+<body>
+
+    <div class="weather-container">
+        <h1>Weather Dashboard</h1>
+        
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Enter city name...">
+            <button id="search-btn">Search</button>
+        </div>
+
+        <div id="loading" style="display: none;">Fetching weather...</div>
+        <div id="error-message" style="color: red; display: none; margin-top: 10px;"></div>
+
+        <div id="weather-info" class="weather-card" style="display: none;">
+            <h2 id="display-city"></h2>
+            <div class="temp-display">
+                <span id="display-temp"></span>
+            </div>
+            <p id="display-desc" style="text-transform: capitalize; font-style: italic;"></p>
+            
+            <div class="extra-details">
+                <p>Humidity: <span id="display-humidity"></span>%</p>
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>
