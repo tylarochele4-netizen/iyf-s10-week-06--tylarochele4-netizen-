@@ -182,3 +182,30 @@ async function getMultipleUsers() {
 
 // Run the parallel test
 getMultipleUsers();
+
+
+// --- Task 12.1: Fetch API Basics 
+
+async function getRealUser(id) {
+    try {
+        // 1. Start the request
+        const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+        
+        // 2. Check if the response is "OK" (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // 3. Convert the raw response into a JSON object
+        const data = await response.json();
+        
+        console.log("Real Data Received:", data);
+        return data;
+
+    } catch (error) {
+        console.error("Failed to fetch real user:", error);
+    }
+}
+
+// Testing it out
+getRealUser(1);
